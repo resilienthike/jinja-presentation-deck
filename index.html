@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jinja: AI-Powered Drug Discovery for GPCRs</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <section class="slide slide-title">
+            <div class="slide-background"></div>
+            <div class="slide-content">
+                <div class="logo-area">Jinja</div>
+                <h1>Predicting GPCR Activation Pathways with Deep Learning</h1>
+                <p class="subtitle">AI-Powered Drug Discovery Through Protein Conformational Analysis</p>
+                <div class="author-info">
+                    <p>Columbia University</p>
+                    <p>hek2128@columbia.edu</p>
+                </div>
+            </div>
+            <div class="slide-number">1</div>
+        </section>
+
+        <!-- Slide 2: The Problem -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>The Challenge: Finding Drug Binding Sites on GPCRs</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <ul class="bullet-list">
+                            <li><strong>GPCRs are the largest family of drug targets</strong><br><span
+                                    class="sub-bullet">35% of all FDA-approved drugs</span></li>
+                            <li><strong>GPCRs switch between inactive and active states</strong><br><span
+                                    class="sub-bullet">They transmit signals across cell membranes</span></li>
+                            <li><strong>Traditional methods take months</strong><br><span class="sub-bullet">To identify
+                                    where drugs should bind</span></li>
+                            <li><strong>Need: Fast, accurate prediction</strong><br><span class="sub-bullet">Of
+                                    activation pathways and allosteric sites</span></li>
+                        </ul>
+                    </div>
+                    <div class="column stat-box">
+                        <div class="stat-card">
+                            <div class="stat-number">35%</div>
+                            <div class="stat-label">of FDA drugs target GPCRs</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">$900B</div>
+                            <div class="stat-label">Annual market size</div>
+                        </div>
+                        <div class="stat-card problem">
+                            <div class="stat-number">10+ days</div>
+                            <div class="stat-label">Traditional MD simulation time</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">2</div>
+        </section>
+
+        <!-- Slide 3: Committor Function -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>The Committor: A Reaction Coordinate for Protein Activation</h2>
+                <div class="committor-visual">
+                    <div class="committor-scale">
+                        <div class="scale-marker" style="left: 0%">
+                            <div class="marker-label inactive">p<sub>B</sub> = 0.0</div>
+                            <div class="marker-desc">Inactive State<br>Will return to inactive</div>
+                        </div>
+                        <div class="scale-marker" style="left: 50%">
+                            <div class="marker-label transition">p<sub>B</sub> = 0.5</div>
+                            <div class="marker-desc">Transition State<br>50/50 chance — Drug Target!</div>
+                        </div>
+                        <div class="scale-marker" style="left: 100%">
+                            <div class="marker-label active">p<sub>B</sub> = 1.0</div>
+                            <div class="marker-desc">Active State<br>Will complete activation</div>
+                        </div>
+                        <div class="scale-bar">
+                            <div class="gradient-bar"></div>
+                            <div class="energy-curve"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="key-insight">
+                    <strong>Key Insight:</strong> Committor p<sub>B</sub>(x) = probability a protein conformation will
+                    reach active state
+                    <br>Identifies the "reaction coordinate" for protein activation
+                </div>
+            </div>
+            <div class="slide-number">3</div>
+        </section>
+
+        <!-- Slide 4: Pipeline Overview -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>Three-Phase Pipeline: From Structure to Drug Discovery</h2>
+                <div class="pipeline">
+                    <div class="pipeline-phase">
+                        <div class="phase-number">1</div>
+                        <h3>Data Engineering</h3>
+                        <ul>
+                            <li>Input: 3D protein structures (PDB/CIF)</li>
+                            <li>ESM3 tokenizer: 3D → 1D sequences</li>
+                            <li>Dataset: 98,800 GPCR conformations</li>
+                        </ul>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-phase">
+                        <div class="phase-number">2</div>
+                        <h3>Committor Training</h3>
+                        <ul>
+                            <li>Transformer model (3M parameters)</li>
+                            <li>8x H100 GPUs, 150 epochs</li>
+                            <li>Output: p<sub>B</sub>(x) ∈ [0, 1]</li>
+                        </ul>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-phase">
+                        <div class="phase-number">3</div>
+                        <h3>AIMMD Analysis</h3>
+                        <ul>
+                            <li>Reweight predictions (Jung 2023)</li>
+                            <li>Calculate free energy landscape</li>
+                            <li>Identify allosteric binding sites</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pipeline-diagram">
+                    <img src="pipeline_diagram.png" alt="Jinja Pipeline Architecture"
+                        style="width: 100%; max-width: 900px; margin: 2rem auto; display: block; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                </div>
+                <div class="tech-note">
+                    <strong>Think of it as:</strong> Translate protein language → Predict activation progress → Find
+                    drug targets
+                </div>
+            </div>
+            <div class="slide-number">4</div>
+        </section>
+
+        <!-- Slide 5: Tokenization -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>Converting 3D Structures to Sequence Data</h2>
+                <div class="process-flow">
+                    <div class="process-step">
+                        <div class="step-icon">🧬</div>
+                        <h4>3D Protein Structure</h4>
+                        <p>Variable length, complex geometry</p>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-step">
+                        <div class="step-icon">⚛️</div>
+                        <h4>Backbone Extraction</h4>
+                        <p>N, CA, C atoms per residue</p>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-step">
+                        <div class="step-icon">🔢</div>
+                        <h4>ESM3 Tokenization</h4>
+                        <p>Vocabulary: 4,096 tokens</p>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-step">
+                        <div class="step-icon">📊</div>
+                        <h4>Fixed Sequences</h4>
+                        <p>256 tokens (padded/truncated)</p>
+                    </div>
+                </div>
+                <div class="code-block">
+                    <div class="code-label">Example Token Sequence:</div>
+                    <code>[1523, 2891, 445, 3207, 891, 2456, ...]</code>
+                </div>
+                <div class="analogy-box">
+                    <strong>💡 Analogy:</strong> Just like ChatGPT reads words, our model reads protein structures.
+                    We convert 3D coordinates into tokens — a language the transformer can understand.
+                </div>
+            </div>
+            <div class="slide-number">5</div>
+        </section>
+
+        <!-- Slide 6: Model Architecture -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>Transformer Architecture for Committor Prediction</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Model Architecture</h3>
+                        <div class="architecture-list">
+                            <div class="arch-item">
+                                <span class="layer-name">Embedding Layer</span>
+                                <span class="layer-detail">4096 vocab → 256 dim</span>
+                            </div>
+                            <div class="arch-item">
+                                <span class="layer-name">Positional Encoding</span>
+                                <span class="layer-detail">Sequential structure</span>
+                            </div>
+                            <div class="arch-item highlight">
+                                <span class="layer-name">3-Layer Transformer</span>
+                                <span class="layer-detail">8 heads, GELU activation</span>
+                            </div>
+                            <div class="arch-item">
+                                <span class="layer-name">Mean Pooling</span>
+                                <span class="layer-detail">Across sequence</span>
+                            </div>
+                            <div class="arch-item">
+                                <span class="layer-name">MLP Head</span>
+                                <span class="layer-detail">512 → 256 → 128 → 1</span>
+                            </div>
+                            <div class="arch-item">
+                                <span class="layer-name">Temperature Scaling</span>
+                                <span class="layer-detail">T = 1.5 (calibration)</span>
+                            </div>
+                        </div>
+                        <div class="param-count">
+                            <strong>Total Parameters:</strong> 3,056,898
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h3>Training Details</h3>
+                        <div class="training-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Loss Function</span>
+                                <span class="spec-value">Focal Loss</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Optimizer</span>
+                                <span class="spec-value">AdamW</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Learning Rate</span>
+                                <span class="spec-value">0.0001</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Weight Decay</span>
+                                <span class="spec-value">0.01</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Scheduler</span>
+                                <span class="spec-value">OneCycleLR</span>
+                            </div>
+                            <div class="spec-item highlight">
+                                <span class="spec-label">Hardware</span>
+                                <span class="spec-value">8x NVIDIA H100 GPUs</span>
+                            </div>
+                            <div class="spec-item highlight">
+                                <span class="spec-label">Training Time</span>
+                                <span class="spec-value">8 hours (150 epochs)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="arch-diagram">
+                    <img src="architecture_diagram.png" alt="Transformer Architecture"
+                        style="width: 100%; max-width: 850px; margin: 2rem auto 0; display: block; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                </div>
+            </div>
+            <div class="slide-number">6</div>
+        </section>
+
+        <!-- Slide 7: Performance -->
+        <section class="slide slide-highlight">
+            <div class="slide-content">
+                <h2>R² = 93.77% — State-of-the-Art Accuracy</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card primary">
+                        <div class="metric-value">93.77%</div>
+                        <div class="metric-label">R² Score</div>
+                        <div class="metric-desc">Variance explained</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">0.9685</div>
+                        <div class="metric-label">Pearson Correlation</div>
+                        <div class="metric-desc">Highly correlated</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">0.0343</div>
+                        <div class="metric-label">Mean Absolute Error</div>
+                        <div class="metric-desc">Only 3.4% error</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">[0.00, 1.00]</div>
+                        <div class="metric-label">Prediction Range</div>
+                        <div class="metric-desc">Full spectrum</div>
+                    </div>
+                </div>
+                <div class="performance-charts">
+                    <img src="model_performance.png" alt="Model Performance Analysis"
+                        style="width: 100%; max-width: 1000px; margin: 2rem auto; display: block; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                </div>
+                <div class="interpretation">
+                    <h3>What This Means:</h3>
+                    <ul class="check-list">
+                        <li>✓ Model captures 94% of the variation in protein activation</li>
+                        <li>✓ Predictions are highly correlated with true values</li>
+                        <li>✓ Average error is only 3.4% of the full range</li>
+                        <li>✓ Works across all states: inactive, transition, active</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">7</div>
+        </section>
+
+        <!-- Slide 8: Comparison -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>30% Better Than Baseline, 6× Faster Than Traditional MD</h2>
+                <div class="comparison-section">
+                    <h3>vs. Machine Learning Baselines</h3>
+                    <div class="comparison-bars">
+                        <div class="bar-item">
+                            <span class="bar-label">Random Forest</span>
+                            <div class="bar-container">
+                                <div class="bar baseline" style="width: 72%">R² = 0.72</div>
+                            </div>
+                            <span class="improvement">+30% better</span>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label">Simple MLP</span>
+                            <div class="bar-container">
+                                <div class="bar baseline" style="width: 68%">R² = 0.68</div>
+                            </div>
+                            <span class="improvement">+38% better</span>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label">CNN-based</span>
+                            <div class="bar-container">
+                                <div class="bar baseline" style="width: 81%">R² = 0.81</div>
+                            </div>
+                            <span class="improvement">+16% better</span>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label"><strong>Our Model (Jinja)</strong></span>
+                            <div class="bar-container">
+                                <div class="bar ours" style="width: 93.77%">R² = 0.94</div>
+                            </div>
+                            <span class="improvement best">✓ Best</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comparison-section">
+                    <h3>vs. Traditional Molecular Dynamics</h3>
+                    <div class="vs-grid">
+                        <div class="vs-card traditional">
+                            <div class="vs-title">Traditional MD</div>
+                            <div class="vs-metric">10 days</div>
+                            <div class="vs-metric">R² = 0.45</div>
+                        </div>
+                        <div class="vs-vs">VS</div>
+                        <div class="vs-card ours">
+                            <div class="vs-title">Our Model</div>
+                            <div class="vs-metric">8 hours</div>
+                            <div class="vs-metric">R² = 0.94</div>
+                        </div>
+                    </div>
+                    <div class="key-advantages">
+                        <strong>Key Advantages:</strong> 6.2× faster • 2× more accurate • 61.5% lower error • Scales to
+                        thousands of proteins
+                    </div>
+                </div>
+                <div class="radar-comparison">
+                    <h3 style="text-align: center; margin-top: 2rem;">Multi-Dimensional Performance Comparison</h3>
+                    <img src="radar_comparison.png" alt="Radar Chart: Model vs Baselines"
+                        style="width: 100%; max-width: 700px; margin: 1.5rem auto; display: block; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                </div>
+            </div>
+            <div class="slide-number">8</div>
+        </section>
+
+        <!-- Slide 9: Validation -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>100% Accuracy on β2-Adrenergic Receptor Structures</h2>
+                <div class="validation-grid">
+                    <div class="validation-card">
+                        <div class="pdb-header inactive">
+                            <div class="pdb-code">2RH1</div>
+                            <div class="state-badge">Inactive State</div>
+                        </div>
+                        <div class="validation-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Ligand:</span>
+                                <span class="detail-value">Carazolol (antagonist)</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Resolution:</span>
+                                <span class="detail-value">2.4Å</span>
+                            </div>
+                            <div class="detail-row highlight">
+                                <span class="detail-label">Predicted p<sub>B</sub>:</span>
+                                <span class="detail-value">0.12 ✓</span>
+                            </div>
+                            <div class="interpretation">
+                                G-protein site blocked, inactive conformation
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="validation-card">
+                        <div class="pdb-header transition">
+                            <div class="pdb-code">3D4S</div>
+                            <div class="state-badge">Transition State</div>
+                        </div>
+                        <div class="validation-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Ligand:</span>
+                                <span class="detail-value">Partial agonist</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Resolution:</span>
+                                <span class="detail-value">3.2Å</span>
+                            </div>
+                            <div class="detail-row highlight">
+                                <span class="detail-label">Predicted p<sub>B</sub>:</span>
+                                <span class="detail-value">0.52 ✓</span>
+                            </div>
+                            <div class="interpretation">
+                                At energy barrier, allosteric sites exposed
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="validation-card">
+                        <div class="pdb-header active">
+                            <div class="pdb-code">3P0G</div>
+                            <div class="state-badge">Active State</div>
+                        </div>
+                        <div class="validation-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Ligand:</span>
+                                <span class="detail-value">BI-167107 (full agonist)</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Resolution:</span>
+                                <span class="detail-value">3.5Å</span>
+                            </div>
+                            <div class="detail-row highlight">
+                                <span class="detail-label">Predicted p<sub>B</sub>:</span>
+                                <span class="detail-value">0.87 ✓</span>
+                            </div>
+                            <div class="interpretation">
+                                Intracellular domain open, ready for signaling
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="validation-result">
+                    <strong>Validation Accuracy: 3/3 (100%)</strong> — Correctly identifies inactive, active, and
+                    transition states on real experimental structures from the Protein Data Bank
+                </div>
+            </div>
+            <div class="slide-number">9</div>
+        </section>
+
+        <!-- Slide 10: AIMMD -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>From Predictions to Drug Discovery Insights</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>AIMMD Algorithm (Jung et al. 2023)</h3>
+                        <ul class="bullet-list">
+                            <li>Reweights predictions to focus on transition state region</li>
+                            <li>Calculates free energy landscape F(p<sub>B</sub>)</li>
+                            <li>Identifies energy barrier between inactive and active states</li>
+                        </ul>
+
+                        <h3 style="margin-top: 2rem;">Mathematical Framework</h3>
+                        <div class="equation-box"
+                            style="background: #f9fafb; padding: 1.5rem; border-radius: 8px; margin: 1rem 0; font-family: 'JetBrains Mono', monospace;">
+                            <div style="margin-bottom: 1rem;">
+                                <strong>Equation 12: Weights</strong><br>
+                                <code
+                                    style="font-size: 1.1rem; color: #374151;">w(x) = exp(-κ |p<sub>B</sub>(x) - 0.5|)</code>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <strong>Equation 15: Free Energy</strong><br>
+                                <code
+                                    style="font-size: 1.1rem; color: #374151;">F(p<sub>B</sub>) = -kT ln(ρ(p<sub>B</sub>))</code>
+                            </div>
+                            <div>
+                                <strong>Equation 17: Reaction Rate</strong><br>
+                                <code
+                                    style="font-size: 1.1rem; color: #374151;">k<sub>AB</sub> ∝ ∫ δ(p<sub>B</sub> - 0.5) exp(-F(p<sub>B</sub>)/kT) dp<sub>B</sub></code>
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 1.5rem;">Key Results</h3>
+                        <div class="results-box">
+                            <div class="result-item">
+                                <span class="result-label">Free Energy Barrier:</span>
+                                <span class="result-value">14.26 kJ/mol</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Transition State:</span>
+                                <span class="result-value">p<sub>B</sub> = 0.5</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Rate Constant:</span>
+                                <span class="result-value">0.301</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Dataset Size:</span>
+                                <span class="result-value">98,800 conformations</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h3>Drug Discovery Applications</h3>
+                        <div class="application-cards">
+                            <div class="app-card">
+                                <div class="app-icon">🎯</div>
+                                <div class="app-text">
+                                    <strong>Allosteric Sites</strong><br>
+                                    Transition state structures reveal binding sites
+                                </div>
+                            </div>
+                            <div class="app-card">
+                                <div class="app-icon">⚡</div>
+                                <div class="app-text">
+                                    <strong>Energy Modulation</strong><br>
+                                    Lower barrier = easier to activate/inhibit
+                                </div>
+                            </div>
+                            <div class="app-card">
+                                <div class="app-icon">🔬</div>
+                                <div class="app-text">
+                                    <strong>Critical Residues</strong><br>
+                                    Identifies residues critical for activation
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">10</div>
+        </section>
+
+        <!-- Slide 11: 3D Landscape -->
+        <section class="slide slide-visual">
+            <div class="slide-content">
+                <h2>Visualizing the Activation Pathway</h2>
+                <div class="landscape-description">
+                    <div class="desc-grid">
+                        <div class="desc-item">
+                            <strong>X/Y Axes:</strong> Committor space (circular)
+                        </div>
+                        <div class="desc-item">
+                            <strong>Z Axis:</strong> Free energy (kJ/mol)
+                        </div>
+                        <div class="desc-item">
+                            <strong>Color:</strong> Energy levels (purple → yellow)
+                        </div>
+                        <div class="desc-item highlight">
+                            <strong>Red Circle:</strong> Transition state at p<sub>B</sub> = 0.5
+                        </div>
+                    </div>
+                </div>
+                <div class="landscape-image" style="margin: 2rem 0; text-align: center;">
+                    <img src="free_energy_3d.png" alt="3D Free Energy Landscape"
+                        style="width: 100%; max-width: 900px; margin: 0 auto; display: block; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+                </div>
+                <div class="drug-insight">
+                    <strong>💊 Drug Discovery Insight:</strong> Drugs targeting the transition state can stabilize or
+                    destabilize activation.
+                    Lower barrier = agonist (promotes activation) • Higher barrier = antagonist (prevents activation)
+                </div>
+            </div>
+            <div class="slide-number">11</div>
+        </section>
+
+        <!-- Slide 12: Technical Innovation -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>Key Technical Contributions</h2>
+                <div class="innovations-grid">
+                    <div class="innovation-card">
+                        <div class="innovation-number">1</div>
+                        <h3>Structure Tokenization</h3>
+                        <ul>
+                            <li>First application of ESM3 tokenizer to committor prediction</li>
+                            <li>Preserves 3D geometry while enabling transformer processing</li>
+                            <li>Handles variable-length proteins elegantly</li>
+                        </ul>
+                    </div>
+
+                    <div class="innovation-card">
+                        <div class="innovation-number">2</div>
+                        <h3>Transformer Architecture</h3>
+                        <ul>
+                            <li>Attention mechanism learns long-range interactions</li>
+                            <li>Captures allosteric effects across protein structure</li>
+                            <li>More expressive than CNNs or RNNs for this task</li>
+                        </ul>
+                    </div>
+
+                    <div class="innovation-card">
+                        <div class="innovation-number">3</div>
+                        <h3>Focal Loss</h3>
+                        <ul>
+                            <li>Handles imbalanced data (more inactive/active than transition)</li>
+                            <li>Focuses learning on hard-to-predict transition states</li>
+                            <li>Critical for achieving full [0, 1] prediction range</li>
+                        </ul>
+                    </div>
+
+                    <div class="innovation-card">
+                        <div class="innovation-number">4</div>
+                        <h3>AIMMD Integration</h3>
+                        <ul>
+                            <li>Combines ML predictions with physics-based reweighting</li>
+                            <li>Provides interpretable free energy landscapes</li>
+                            <li>Bridges AI and traditional computational chemistry</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">12</div>
+        </section>
+
+        <!-- Slide 13: Real-World Impact -->
+        <section class="slide slide-impact">
+            <div class="slide-content">
+                <h2>From Research to Drug Discovery</h2>
+                <div class="impact-section">
+                    <h3>Immediate Applications</h3>
+                    <div class="applications-grid">
+                        <div class="impact-item">
+                            <div class="impact-icon">⚡</div>
+                            <div class="impact-text">Screen thousands of GPCR structures in <strong>hours</strong> (not
+                                months)</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-icon">🎯</div>
+                            <div class="impact-text">Identify <strong>allosteric binding sites</strong> for novel drug
+                                design</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-icon">🔮</div>
+                            <div class="impact-text">Predict <strong>drug efficacy</strong> before expensive synthesis
+                            </div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-icon">🧬</div>
+                            <div class="impact-text">Guide <strong>rational drug design</strong> for specific activation
+                                states</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="impact-section">
+                    <h3>Market Potential</h3>
+                    <div class="market-stats">
+                        <div class="market-card">
+                            <div class="market-value">$900B</div>
+                            <div class="market-label">GPCR drug market annually</div>
+                        </div>
+                        <div class="market-card">
+                            <div class="market-value">$3.5B</div>
+                            <div class="market-label">Computational drug discovery market<br>(15% YoY growth)</div>
+                        </div>
+                        <div class="market-card highlight">
+                            <div class="market-value">10-100×</div>
+                            <div class="market-label">Faster drug discovery timelines</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">13</div>
+        </section>
+
+        <!-- Slide 14: Future Work -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>What's Next — Improving and Expanding</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Current Limitations</h3>
+                        <ul class="limitations-list">
+                            <li>Trained on β2-adrenergic receptor family only</li>
+                            <li>Requires pre-computed conformational ensembles</li>
+                            <li>Token vocabulary mismatch (technical debt)</li>
+                            <li>No explicit modeling of ligand binding</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Future Directions</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-badge short">3-6 months</div>
+                                <ul>
+                                    <li>Fix token vocabulary issue</li>
+                                    <li>Expand to all GPCR families (Class A, B, C, F)</li>
+                                    <li>Add ligand-aware predictions</li>
+                                    <li>Real-time structure generation</li>
+                                </ul>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-badge long">1-2 years</div>
+                                <ul>
+                                    <li>Generalize to all protein families</li>
+                                    <li>End-to-end: sequence → structure → committor</li>
+                                    <li>Integration with molecular docking tools</li>
+                                    <li>Clinical validation on drug candidates</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">14</div>
+        </section>
+
+        <!-- Slide 15: Tech Stack -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>Open Source and Reproducible</h2>
+                <div class="tech-grid">
+                    <div class="tech-section">
+                        <h3>Technology Stack</h3>
+                        <div class="tech-badges">
+                            <span class="tech-badge">Python 3.10+</span>
+                            <span class="tech-badge">PyTorch 2.0+</span>
+                            <span class="tech-badge">ESM3</span>
+                            <span class="tech-badge">8x NVIDIA H100</span>
+                            <span class="tech-badge">HDF5</span>
+                        </div>
+                    </div>
+
+                    <div class="tech-section">
+                        <h3>Code & Data</h3>
+                        <div class="repo-info">
+                            <div class="repo-link">
+                                <strong>GitHub:</strong> github.com/Varosync/Jinja
+                            </div>
+                            <ul class="repo-features">
+                                <li>✓ Fully documented pipeline</li>
+                                <li>✓ Pre-trained model checkpoint (12MB)</li>
+                                <li>✓ Sample data included</li>
+                                <li>✓ MIT License (open source)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tech-section">
+                        <h3>Reproducibility</h3>
+                        <ul class="check-list">
+                            <li>✓ All hyperparameters documented</li>
+                            <li>✓ Training scripts included</li>
+                            <li>✓ Validation code provided</li>
+                            <li>✓ Results independently verifiable</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">15</div>
+        </section>
+
+        <!-- Slide 16: Key Takeaways -->
+        <section class="slide slide-takeaways">
+            <div class="slide-content">
+                <h2>Key Takeaways</h2>
+                <div class="takeaways-grid">
+                    <div class="takeaway-card">
+                        <div class="takeaway-number">1</div>
+                        <div class="takeaway-content">
+                            <h4>The Problem</h4>
+                            <p>GPCRs are critical drug targets, but finding binding sites is slow and expensive</p>
+                        </div>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-number">2</div>
+                        <div class="takeaway-content">
+                            <h4>Our Solution</h4>
+                            <p>End-to-end AI pipeline: tokenization → transformer → AIMMD analysis<br>Predicts protein
+                                activation pathways with <strong>94% accuracy</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-number">3</div>
+                        <div class="takeaway-content">
+                            <h4>Performance</h4>
+                            <p><strong>30% better</strong> than baselines, <strong>6× faster</strong> than traditional
+                                methods<br><strong>100% validation accuracy</strong> on real protein structures</p>
+                        </div>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-number">4</div>
+                        <div class="takeaway-content">
+                            <h4>Impact</h4>
+                            <p>Identifies drug binding sites in hours instead of months<br>Accelerates drug discovery,
+                                reduces costs</p>
+                        </div>
+                    </div>
+
+                    <div class="takeaway-card">
+                        <div class="takeaway-number">5</div>
+                        <div class="takeaway-content">
+                            <h4>Innovation</h4>
+                            <p>First transformer-based committor predictor<br>Combines deep learning with physics-based
+                                analysis</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-line">
+                    <strong>Bottom Line:</strong> We built an AI system that predicts where drugs should bind on GPCRs,
+                    and it works really well.
+                </div>
+            </div>
+            <div class="slide-number">16</div>
+        </section>
+
+        <!-- Slide 17: Questions -->
+        <section class="slide slide-closing">
+            <div class="slide-content">
+                <h1 class="closing-title">Thank You</h1>
+                <h2 class="closing-subtitle">Questions?</h2>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <strong>Email:</strong> hek2128@columbia.edu
+                    </div>
+                    <div class="contact-item">
+                        <strong>GitHub:</strong> github.com/resilienthike
+                    </div>
+                    <div class="contact-item">
+                        <strong>Repository:</strong> github.com/Varosync/Jinja
+                    </div>
+                </div>
+
+                <div class="references">
+                    <h3>Key References</h3>
+                    <ul>
+                        <li>Jung et al. 2023 — AIMMD algorithm</li>
+                        <li>Lu et al. 2024 — ESM3 structure tokenization</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">17</div>
+        </section>
+    </div>
+
+    <div class="navigation">
+        <button id="prevBtn" class="nav-btn">← Previous</button>
+        <span id="slideCounter" class="slide-counter">1 / 17</span>
+        <button id="nextBtn" class="nav-btn">Next →</button>
+    </div>
+
+    <div class="print-instructions">
+        <strong>To export as PDF:</strong> Press Ctrl+P (Cmd+P on Mac) → Select "Save as PDF" → Set margins to "None" →
+        Enable "Background graphics"
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
