@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet">
 </head>
 
@@ -23,14 +23,32 @@
                 <h1>Predicting GPCR Activation Pathways with Deep Learning</h1>
                 <p class="subtitle">AI-Powered Drug Discovery Through Protein Conformational Analysis</p>
                 <div class="author-info">
-                    <p>Columbia University</p>
-                    <p>hek2128@columbia.edu</p>
+                    <p>Columbia University, Varosync</p>
+                    <p>harry@ varosync.com</p>
                 </div>
             </div>
             <div class="slide-number">1</div>
         </section>
 
-        <!-- Slide 2: The Problem -->
+        <!-- Slide 2: The Static Illusion (The Lie) -->
+        <section class="slide slide-visual">
+            <div class="slide-content" style="display: flex; flex-direction: column; height: 100%; justify-content: center; align-items: center; text-align: center;">
+                <h2>The Lie: "Proteins are Static"</h2>
+                <div class="video-container" style="width: 100%; max-width: 900px; border-radius: 12px; overflow: hidden; border: 2px solid var(--gray-900); box-shadow: var(--shadow-xl);">
+                    <video autoplay loop muted playsinline style="width: 100%; display: block;">
+                        <source src="loop_protein_motion.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="drug-insight" style="margin-top: 2rem; max-width: 800px;">
+                    <strong>► Reality Check:</strong> Textbooks show static surfaces. In reality, proteins are breathing, moving machines.
+                    We need to see the <em>motion</em> to find the drug targets.
+                </div>
+            </div>
+            <div class="slide-number">2</div>
+        </section>
+
+        <!-- Slide 3: The Problem -->
         <section class="slide">
             <div class="slide-content">
                 <h2>The Challenge: Finding Drug Binding Sites on GPCRs</h2>
@@ -152,25 +170,46 @@
                 <h2>Converting 3D Structures to Sequence Data</h2>
                 <div class="process-flow">
                     <div class="process-step">
-                        <div class="step-icon">🧬</div>
+                        <div class="step-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M2 12h20M2 12c0 5.523 4.477 10 10 10s10-4.477 10-10M2 12c0-5.523 4.477-10 10-10s10 4.477 10 10"/>
+                            </svg>
+                        </div>
                         <h4>3D Protein Structure</h4>
                         <p>Variable length, complex geometry</p>
                     </div>
                     <div class="process-arrow">→</div>
                     <div class="process-step">
-                        <div class="step-icon">⚛️</div>
+                        <div class="step-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M12 2a10 10 0 0 1 0 20M2 12a10 10 0 0 1 20 0"/>
+                                <path d="M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/>
+                            </svg>
+                        </div>
                         <h4>Backbone Extraction</h4>
                         <p>N, CA, C atoms per residue</p>
                     </div>
                     <div class="process-arrow">→</div>
                     <div class="process-step">
-                        <div class="step-icon">🔢</div>
+                        <div class="step-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="4" y="4" width="16" height="16" rx="2"/>
+                                <path d="M8 2v4M16 2v4M8 18v4M16 18v4M2 8h4M18 8h4M2 16h4M18 16h4"/>
+                            </svg>
+                        </div>
                         <h4>ESM3 Tokenization</h4>
                         <p>Vocabulary: 4,096 tokens</p>
                     </div>
                     <div class="process-arrow">→</div>
                     <div class="process-step">
-                        <div class="step-icon">📊</div>
+                        <div class="step-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="20" x2="12" y2="10"/>
+                                <line x1="18" y1="20" x2="18" y2="4"/>
+                                <line x1="6" y1="20" x2="6" y2="16"/>
+                            </svg>
+                        </div>
                         <h4>Fixed Sequences</h4>
                         <p>256 tokens (padded/truncated)</p>
                     </div>
@@ -180,91 +219,13 @@
                     <code>[1523, 2891, 445, 3207, 891, 2456, ...]</code>
                 </div>
                 <div class="analogy-box">
-                    <strong>💡 Analogy:</strong> Just like ChatGPT reads words, our model reads protein structures.
+                    <strong>★ Analogy:</strong> Just like ChatGPT reads words, our model reads protein structures.
                     We convert 3D coordinates into tokens — a language the transformer can understand.
                 </div>
             </div>
             <div class="slide-number">5</div>
         </section>
 
-        <!-- Slide 6: Model Architecture -->
-        <section class="slide">
-            <div class="slide-content">
-                <h2>Transformer Architecture for Committor Prediction</h2>
-                <div class="two-column">
-                    <div class="column">
-                        <h3>Model Architecture</h3>
-                        <div class="architecture-list">
-                            <div class="arch-item">
-                                <span class="layer-name">Embedding Layer</span>
-                                <span class="layer-detail">4096 vocab → 256 dim</span>
-                            </div>
-                            <div class="arch-item">
-                                <span class="layer-name">Positional Encoding</span>
-                                <span class="layer-detail">Sequential structure</span>
-                            </div>
-                            <div class="arch-item highlight">
-                                <span class="layer-name">3-Layer Transformer</span>
-                                <span class="layer-detail">8 heads, GELU activation</span>
-                            </div>
-                            <div class="arch-item">
-                                <span class="layer-name">Mean Pooling</span>
-                                <span class="layer-detail">Across sequence</span>
-                            </div>
-                            <div class="arch-item">
-                                <span class="layer-name">MLP Head</span>
-                                <span class="layer-detail">512 → 256 → 128 → 1</span>
-                            </div>
-                            <div class="arch-item">
-                                <span class="layer-name">Temperature Scaling</span>
-                                <span class="layer-detail">T = 1.5 (calibration)</span>
-                            </div>
-                        </div>
-                        <div class="param-count">
-                            <strong>Total Parameters:</strong> 3,056,898
-                        </div>
-                    </div>
-                    <div class="column">
-                        <h3>Training Details</h3>
-                        <div class="training-specs">
-                            <div class="spec-item">
-                                <span class="spec-label">Loss Function</span>
-                                <span class="spec-value">Focal Loss</span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Optimizer</span>
-                                <span class="spec-value">AdamW</span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Learning Rate</span>
-                                <span class="spec-value">0.0001</span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Weight Decay</span>
-                                <span class="spec-value">0.01</span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Scheduler</span>
-                                <span class="spec-value">OneCycleLR</span>
-                            </div>
-                            <div class="spec-item highlight">
-                                <span class="spec-label">Hardware</span>
-                                <span class="spec-value">8x NVIDIA H100 GPUs</span>
-                            </div>
-                            <div class="spec-item highlight">
-                                <span class="spec-label">Training Time</span>
-                                <span class="spec-value">8 hours (150 epochs)</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="arch-diagram">
-                    <img src="architecture_diagram.png" alt="Transformer Architecture"
-                        style="width: 100%; max-width: 850px; margin: 2rem auto 0; display: block; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                </div>
-            </div>
-            <div class="slide-number">6</div>
-        </section>
 
         <!-- Slide 7: Performance -->
         <section class="slide slide-highlight">
@@ -517,21 +478,36 @@
                         <h3>Drug Discovery Applications</h3>
                         <div class="application-cards">
                             <div class="app-card">
-                                <div class="app-icon">🎯</div>
+                                <div class="app-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <circle cx="12" cy="12" r="6"/>
+                                        <circle cx="12" cy="12" r="2"/>
+                                    </svg>
+                                </div>
                                 <div class="app-text">
                                     <strong>Allosteric Sites</strong><br>
                                     Transition state structures reveal binding sites
                                 </div>
                             </div>
                             <div class="app-card">
-                                <div class="app-icon">⚡</div>
+                                <div class="app-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                                    </svg>
+                                </div>
                                 <div class="app-text">
                                     <strong>Energy Modulation</strong><br>
                                     Lower barrier = easier to activate/inhibit
                                 </div>
                             </div>
                             <div class="app-card">
-                                <div class="app-icon">🔬</div>
+                                <div class="app-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"/>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                    </svg>
+                                </div>
                                 <div class="app-text">
                                     <strong>Critical Residues</strong><br>
                                     Identifies residues critical for activation
@@ -544,37 +520,57 @@
             <div class="slide-number">10</div>
         </section>
 
-        <!-- Slide 11: 3D Landscape -->
+        <!-- Slide 11: The Map (Video) -->
         <section class="slide slide-visual">
             <div class="slide-content">
                 <h2>Visualizing the Activation Pathway</h2>
                 <div class="landscape-description">
                     <div class="desc-grid">
                         <div class="desc-item">
-                            <strong>X/Y Axes:</strong> Committor space (circular)
+                            <strong>X/Y Axes:</strong> Committor space
                         </div>
                         <div class="desc-item">
                             <strong>Z Axis:</strong> Free energy (kJ/mol)
                         </div>
-                        <div class="desc-item">
-                            <strong>Color:</strong> Energy levels (purple → yellow)
-                        </div>
                         <div class="desc-item highlight">
-                            <strong>Red Circle:</strong> Transition state at p<sub>B</sub> = 0.5
+                            <strong>Red Path:</strong> Minimum Energy Path
+                        </div>
+                        <div class="desc-item">
+                            <strong>Barrier:</strong> The wall to climb
                         </div>
                     </div>
                 </div>
-                <div class="landscape-image" style="margin: 2rem 0; text-align: center;">
-                    <img src="free_energy_3d.png" alt="3D Free Energy Landscape"
-                        style="width: 100%; max-width: 900px; margin: 0 auto; display: block; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+                <div class="landscape-image" style="margin: 3rem auto; width: 100%; max-width: 800px; display: block; position: relative;">
+                    <div class="video-container" style="width: 100%; border-radius: 12px; overflow: hidden; border: 2px solid var(--gray-900); box-shadow: var(--shadow-xl);">
+                        <video autoplay loop muted playsinline style="width: 100%; height: auto; display: block;">
+                            <source src="energy_well.mov" type="video/quicktime">
+                            <source src="energy_well.mp4" type="video/mp4">
+                            <!-- Fallback to image if video fails -->
+                            <img src="free_energy_3d.png" alt="3D Free Energy Landscape" style="width: 100%;">
+                        </video>
+                    </div>
                 </div>
                 <div class="drug-insight">
-                    <strong>💊 Drug Discovery Insight:</strong> Drugs targeting the transition state can stabilize or
-                    destabilize activation.
-                    Lower barrier = agonist (promotes activation) • Higher barrier = antagonist (prevents activation)
+                    <strong>► The Map:</strong> Standard MD gets stuck in the valleys. Our AI found this red path over the barrier.
                 </div>
             </div>
-            <div class="slide-number">11</div>
+            <div class="slide-number">12</div>
+        </section>
+
+        <!-- Slide 13: The Proof (Video) -->
+        <section class="slide slide-visual" style="background: #000;">
+            <div class="slide-content" style="display: flex; flex-direction: column; height: 100%; justify-content: center; align-items: center; text-align: center;">
+                <h2>The Proof: Finding the Hidden Pocket</h2>
+                <div class="video-container" style="width: 100%; max-width: 900px; border-radius: 12px; overflow: hidden; border: 2px solid var(--plasma-pink); box-shadow: 0 0 30px rgba(236, 72, 153, 0.3);">
+                    <video autoplay loop muted playsinline style="width: 100%; display: block;">
+                        <source src="CT_Ligand_Pocket.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="drug-insight" style="margin-top: 2rem; max-width: 800px; border-color: var(--plasma-pink); color: var(--plasma-pink);">
+                    <strong>► Slicing the Receptor:</strong> By following the red path, we can slice open the protein... and find the hidden pocket where the drug actually binds.
+                </div>
+            </div>
+            <div class="slide-number">13</div>
         </section>
 
         <!-- Slide 12: Technical Innovation -->
@@ -634,22 +630,41 @@
                     <h3>Immediate Applications</h3>
                     <div class="applications-grid">
                         <div class="impact-item">
-                            <div class="impact-icon">⚡</div>
+                            <div class="impact-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                                </svg>
+                            </div>
                             <div class="impact-text">Screen thousands of GPCR structures in <strong>hours</strong> (not
                                 months)</div>
                         </div>
                         <div class="impact-item">
-                            <div class="impact-icon">🎯</div>
+                            <div class="impact-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <circle cx="12" cy="12" r="6"/>
+                                    <circle cx="12" cy="12" r="2"/>
+                                </svg>
+                            </div>
                             <div class="impact-text">Identify <strong>allosteric binding sites</strong> for novel drug
                                 design</div>
                         </div>
                         <div class="impact-item">
-                            <div class="impact-icon">🔮</div>
+                            <div class="impact-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 12h20M12 2v20"/>
+                                    <circle cx="12" cy="12" r="8"/>
+                                </svg>
+                            </div>
                             <div class="impact-text">Predict <strong>drug efficacy</strong> before expensive synthesis
                             </div>
                         </div>
                         <div class="impact-item">
-                            <div class="impact-icon">🧬</div>
+                            <div class="impact-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                            </div>
                             <div class="impact-text">Guide <strong>rational drug design</strong> for specific activation
                                 states</div>
                         </div>
@@ -685,7 +700,7 @@
                     <div class="column">
                         <h3>Current Limitations</h3>
                         <ul class="limitations-list">
-                            <li>Trained on β2-adrenergic receptor family only</li>
+                            <li>Trained on β2-adrenergic and GLP1 receptor family only</li>
                             <li>Requires pre-computed conformational ensembles</li>
                             <li>Token vocabulary mismatch (technical debt)</li>
                             <li>No explicit modeling of ligand binding</li>
@@ -724,7 +739,7 @@
             <div class="slide-content">
                 <h2>Open Source and Reproducible</h2>
                 <div class="tech-grid">
-                    <div class="tech-section">
+                    <div class="tech-section" style="grid-column: 1 / -1;">
                         <h3>Technology Stack</h3>
                         <div class="tech-badges">
                             <span class="tech-badge">Python 3.10+</span>
@@ -742,22 +757,20 @@
                                 <strong>GitHub:</strong> github.com/Varosync/Jinja
                             </div>
                             <ul class="repo-features">
-                                <li>✓ Fully documented pipeline</li>
-                                <li>✓ Pre-trained model checkpoint (12MB)</li>
-                                <li>✓ Sample data included</li>
-                                <li>✓ MIT License (open source)</li>
+                                <li><strong>MIT Licensed:</strong> Open for commercial/academic use.</li>
+                                <li><strong>Pre-trained Models:</strong> 12MB checkpoint ready for inference.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="tech-section">
                         <h3>Reproducibility</h3>
-                        <ul class="check-list">
-                            <li>✓ All hyperparameters documented</li>
-                            <li>✓ Training scripts included</li>
-                            <li>✓ Validation code provided</li>
-                            <li>✓ Results independently verifiable</li>
-                        </ul>
+                        <div class="repo-info">
+                            <ul class="check-list">
+                                <li><strong>One-Click Training:</strong> <code>python train.py</code> replicates results.</li>
+                                <li><strong>Clean Data:</strong> Pre-processed PDB structures included.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -829,7 +842,7 @@
 
                 <div class="contact-info">
                     <div class="contact-item">
-                        <strong>Email:</strong> hek2128@columbia.edu
+                        <strong>Email:</strong> harry@varosync.com
                     </div>
                     <div class="contact-item">
                         <strong>GitHub:</strong> github.com/resilienthike
@@ -842,8 +855,8 @@
                 <div class="references">
                     <h3>Key References</h3>
                     <ul>
-                        <li>Jung et al. 2023 — AIMMD algorithm</li>
-                        <li>Lu et al. 2024 — ESM3 structure tokenization</li>
+                        <ul>Jung et al. 2023 — AIMMD algorithm</ul>
+                        <ul>Lu et al. 2024 — ESM3 structure tokenization</ul>
                     </ul>
                 </div>
             </div>
@@ -851,16 +864,7 @@
         </section>
     </div>
 
-    <div class="navigation">
-        <button id="prevBtn" class="nav-btn">← Previous</button>
-        <span id="slideCounter" class="slide-counter">1 / 17</span>
-        <button id="nextBtn" class="nav-btn">Next →</button>
-    </div>
 
-    <div class="print-instructions">
-        <strong>To export as PDF:</strong> Press Ctrl+P (Cmd+P on Mac) → Select "Save as PDF" → Set margins to "None" →
-        Enable "Background graphics"
-    </div>
 
     <script src="script.js"></script>
 </body>
