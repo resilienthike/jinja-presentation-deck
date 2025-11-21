@@ -130,12 +130,47 @@ body {
 }
 
 .logo-area {
-    font-size: 4rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    font-family: var(--font-title);
-    color: var(--plasma-yellow);
-    text-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+    margin-bottom: 2rem;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none !important;
+    box-shadow: none !important;
+    background: none !important;
+    padding: 0 !important;
+}
+
+.logo-area img {
+    display: block;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.slide-logo {
+    position: absolute;
+    top: 2rem;
+    right: 2.5rem;
+    z-index: 10;
+    border: none !important;
+    box-shadow: none !important;
+    background: none !important;
+    padding: 0 !important;
+}
+
+.slide-logo img {
+    display: block;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* White logo on dark slides */
+.slide-visual .slide-logo img,
+.slide-closing .slide-logo img {
+    filter: brightness(0) invert(1);
 }
 
 .slide-title h1 {
